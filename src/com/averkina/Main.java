@@ -5,8 +5,7 @@ import java.util.Scanner;
 public class Main {
 
     public static boolean canModify (String oneStr, String twoStr) {
-        var oneChar = 0;
-        var twoChar = 0;
+        var index = 0;
         boolean oneСhange = false;
         boolean twoСhange = false;
         boolean result = false;
@@ -15,59 +14,18 @@ public class Main {
             return false;
         }
 
-        while (oneChar < oneStr.length() || twoChar < twoStr.length()) {
-            if(oneChar >= oneStr.length() || twoChar >= twoStr.length()){
-                if(!result){
-                    return true;
-                }
-                else {
-                    return false;
-                }
+        while (index < oneStr.length() && index < twoStr.length()) {
+            if(oneStr.toCharArray()[index] != twoStr.toCharArray()[index]) {
+                if(!oneStr.substring(index+1).equals(twoStr.substring(index+1))
+                        && !oneStr.substring(index).equals(twoStr.substring(index+1))
+                        && !oneStr.substring(index+1).equals(twoStr.substring(index))){
+                     return false;
+                 }
+                 else {
+                     return true;
+                 }
             }
-
-            if(oneStr.charAt(oneChar) != twoStr.charAt(twoChar)) {
-                if(!result){
-                    result = true;
-                }
-                else {
-                    return false;
-                }
-
-                if(oneChar+1 < oneStr.length()){
-                    if(oneStr.charAt(oneChar+1) != twoStr.charAt(twoChar)) {
-                        twoСhange = true;
-                    }
-                    else {
-                        twoСhange = false;
-                    }
-                }
-                else {
-                    twoСhange = true;
-                }
-
-                if(twoChar+1 < twoStr.length()){
-                    if(oneStr.charAt(oneChar) != twoStr.charAt(twoChar+1)) {
-                        oneСhange = true;
-                    }
-                    else {
-                        oneСhange = false;
-                    }
-                }
-                else {
-                    oneСhange = true;
-                }
-
-                if (oneСhange) {
-                    oneChar++;
-                }
-                if (twoСhange) {
-                    twoChar++;
-                }
-            }
-            else {
-                oneChar++;
-                twoChar++;
-            }
+            index++;
         }
 
         return true;
@@ -121,7 +79,7 @@ public class Main {
                 System.out.print("Введите вторую строку: ");
                 twuStr = in.nextLine();
                 System.out.print(oneStr + "/" + twuStr + " - ");
-                System.out.println(canModify(oneStr, twuStr));
+                System.out.println(canModify(oneStr.toLowerCase(), twuStr.toLowerCase()));
             }
         }
     }
